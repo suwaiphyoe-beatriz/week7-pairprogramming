@@ -60,7 +60,7 @@ describe("Given there are initially some jobs saved", () => {
       .expect(200)
       .expect("Content-Type", /application\/json/);
   });
-
+  
   it("should create one job when POST /api/jobs is called", async () => {
     const newJob = {
       title: "Full Stack Developer",
