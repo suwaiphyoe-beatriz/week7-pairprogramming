@@ -15,14 +15,19 @@ const EditJobPage = () => {
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : null;
+
   const navigate = useNavigate();
 
   const updateJob = async (job) => {
     try {
+      console.log("Updating job:", job);
       const res = await fetch(`/api/jobs/${job.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(job),
       });
@@ -33,6 +38,7 @@ const EditJobPage = () => {
       return false;
     }
   };
+
 
   // Fetch job data
   useEffect(() => {
@@ -81,10 +87,10 @@ const EditJobPage = () => {
 
     const success = await updateJob(updatedJob);
     if (success) {
-      // toast.success("Job Updated Successfully");
+      console.log("Job Updated Successfully");
       navigate(`/jobs/${id}`);
     } else {
-      // toast.error("Failed to update the job");
+      console.error("Failed to update the job");
     }
   };
 
